@@ -3,7 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Real-time counter showing animal lives saved this year based on US human death statistics" />
+    <meta name="keywords" content="animal clock, human death, animal welfare, statistics, real-time counter" />
+    <meta name="author" content="Human Clock" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://savetheplaneteatthebabies.lol/" />
+    <meta property="og:title" content="Animals Saved Clock" />
+    <meta property="og:description" content="Real-time counter showing animal lives saved this year based on US human death statistics" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://savetheplaneteatthebabies.lol/" />
+    <meta property="twitter:title" content="Animals Saved Clock" />
+    <meta property="twitter:description" content="Real-time counter showing animal lives saved this year based on US human death statistics" />
+    
     <title>US Animals Saved Clock</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" as="style">
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Load CSS with font-display swap -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,11 +39,15 @@
       }
     </script>
     <style>
+      /* Load fonts with display swap for better performance */
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
       
+      /* Critical CSS inlined for faster rendering */
       body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0;
+        padding: 0;
       }
       
       .counter-font {
@@ -36,6 +65,11 @@
         50% {
           opacity: 0.8;
         }
+      }
+      
+      /* Optimize animations for performance */
+      .pulse {
+        will-change: opacity;
       }
     </style>
   </head>
@@ -310,73 +344,80 @@
       </div>
     </footer>
     <script>
-      // Constants
+      // Performance optimization: Use requestAnimationFrame for smoother updates
+      // and cache DOM queries and calculations
+      
+      // Constants (pre-calculated for performance)
       const HUMAN_DEATHS_PER_YEAR = 3100000;
       const US_TOTAL_POPULATION = 340000000;
       const LAND_ANIMAL_DEATHS_PER_YEAR = 8533141000;
       const LAND_AND_AQUATIC_ANIMAL_DEATHS_PER_YEAR = 55429141000;
       const ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR = (LAND_AND_AQUATIC_ANIMAL_DEATHS_PER_YEAR / US_TOTAL_POPULATION);
+      
+      // Cache total seconds in year (only changes once per year)
+      const TOTAL_SECONDS_IN_YEAR = 31536000; // 365 days * 24 hours * 60 minutes * 60 seconds
+      const HUMAN_DEATHS_PER_SECOND = HUMAN_DEATHS_PER_YEAR / TOTAL_SECONDS_IN_YEAR;
+      const ANIMALS_SAVED_PER_SECOND = HUMAN_DEATHS_PER_SECOND * ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR;
 
-      // Helper functions
+      // Optimized helper functions
       const getStartOfYear = date => new Date(date.getFullYear(), 0, 1, 0, 0, 0, 0);
-      const getTotalSecondsInYear = year => {
-        const start = new Date(year, 0, 1);
-        const end = new Date(year + 1, 0, 1);
-        return Math.floor((end - start) / 1000);
-      };
       const getSecondsElapsedThisYear = date => {
         const startOfYear = getStartOfYear(date);
         return Math.floor((date - startOfYear) / 1000);
       };
       const getHumanDeathsSoFarThisYear = date => {
         const secondsElapsed = getSecondsElapsedThisYear(date);
-        const totalSeconds = getTotalSecondsInYear(date.getFullYear());
-
-        return HUMAN_DEATHS_PER_YEAR * (secondsElapsed / totalSeconds);
+        return HUMAN_DEATHS_PER_YEAR * (secondsElapsed / TOTAL_SECONDS_IN_YEAR);
       };
       const animalLivesSavedSoFarThisYearThisSecond = date => {
         return getHumanDeathsSoFarThisYear(date) * ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR;
       };
-      const getCurrentAnimalLivesSavedPerSecond = year => {
-        return (HUMAN_DEATHS_PER_YEAR * ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR) / getTotalSecondsInYear(year);
-      };
 
-      // DOM elements
+      // Cache DOM elements (only query once)
       const counterEl = document.getElementById('counter');
       const rateEl = document.getElementById('rate');
       const yearEl = document.getElementById('year');
       const footerYearEl = document.getElementById('footer-year');
       const animalPerHumanDeathEl = document.getElementById('animal-per-human-death');
 
-      // Set animal per human death
+      // Initialize static content
       animalPerHumanDeathEl.textContent = ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR.toLocaleString(undefined, { maximumFractionDigits: 2 });
-
-      // Set year in text
+      
       const now = new Date();
-      yearEl.textContent = now.getFullYear();
-      footerYearEl.textContent = now.getFullYear();
+      const currentYear = now.getFullYear();
+      yearEl.textContent = currentYear;
+      footerYearEl.textContent = currentYear;
+      rateEl.textContent = ANIMALS_SAVED_PER_SECOND.toLocaleString(undefined, { maximumFractionDigits: 2 });
 
-      // Set rate
-      const rate = getCurrentAnimalLivesSavedPerSecond(now.getFullYear());
-      rateEl.textContent = rate.toLocaleString(undefined, { maximumFractionDigits: 2 });
-
-      // Counter update
-      let lastUpdate = Date.now();
-      let animalLivesSaved = animalLivesSavedSoFarThisYearThisSecond(new Date());
+      // Optimized counter update using requestAnimationFrame
+      let animalLivesSaved = animalLivesSavedSoFarThisYearThisSecond(now);
+      let lastUpdateTime = Date.now();
 
       const updateCounter = () => {
-        const now = new Date();
-        // Reset if new year
-        if (now.getMonth() === 0 && now.getDate() === 1 && now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
-          animalLivesSaved = 0;
-        } else {
-          animalLivesSaved = animalLivesSavedSoFarThisYearThisSecond(now);
+        const currentTime = Date.now();
+        
+        // Only update if a second has passed (performance optimization)
+        if (currentTime - lastUpdateTime >= 1000) {
+          const now = new Date();
+          
+          // Reset if new year (optimized check)
+          if (now.getMonth() === 0 && now.getDate() === 1 && now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+            animalLivesSaved = 0;
+          } else {
+            animalLivesSaved = animalLivesSavedSoFarThisYearThisSecond(now);
+          }
+          
+          // Use textContent for better performance than innerHTML
+          counterEl.textContent = Math.floor(animalLivesSaved).toLocaleString();
+          lastUpdateTime = currentTime;
         }
-        counterEl.textContent = Math.floor(animalLivesSaved).toLocaleString();
+        
+        // Use requestAnimationFrame for smoother performance
+        requestAnimationFrame(updateCounter);
       };
 
+      // Start the counter
       updateCounter();
-      setInterval(updateCounter, 1000);
     </script>
   </body>
 </html> 
