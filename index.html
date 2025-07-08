@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Human Clock - Animal Lives Saved</title>
+    <title>US Animals Saved Clock</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -99,9 +99,155 @@
       </div>
     </main>
     
+    <!-- Questions and Answers Section -->
+    <section class="max-w-2xl mx-auto mb-12">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-2xl font-bold text-primary mb-6 justify-center">Questions and Answers</h2>
+          <div class="space-y-4">
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                How many animals are killed for food in the US each year?
+              </div>
+              <div class="collapse-content text-base-content/80 space-y-4">
+                <p>The United States Department of Agriculture reports that <span class="font-bold text-primary">9.76 billion land animals</span> were slaughtered in 2020:</p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Chickens: <span class="font-bold">9,346,660,000</span></li>
+                  <li>Turkeys: <span class="font-bold">223,003,000</span></li>
+                  <li>Cattle (incl. calves): <span class="font-bold">33,242,000</span></li>
+                  <li>Pigs: <span class="font-bold">131,563,000</span></li>
+                  <li>Ducks: <span class="font-bold">22,484,000</span></li>
+                  <li>Sheep (incl. lambs): <span class="font-bold">2,225,000</span></li>
+                </ul>
+                <p>Accounting for U.S. animal meat imports and exports, <span class="font-bold text-primary">8.2 billion land animals</span> were killed to support the U.S. food supply:</p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Chickens: <span class="font-bold">7,835,037,000</span></li>
+                  <li>Turkeys: <span class="font-bold">201,638,000</span></li>
+                  <li>Cattle (incl. calves): <span class="font-bold">33,714,000</span></li>
+                  <li>Pigs: <span class="font-bold">101,916,000</span></li>
+                  <li>Ducks: <span class="font-bold">22,484,000</span></li>
+                  <li>Sheep (incl. lambs): <span class="font-bold">6,768,000</span></li>
+                </ul>
+                <p>Adjusting for pre-slaughter farmed animal mortality rates, industrial farming claimed the lives of <span class="font-bold text-primary">8.53 billion land animals</span> in 2020 to support the U.S. food supply:</p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Chickens: <span class="font-bold">8,127,632,000</span></li>
+                  <li>Turkeys: <span class="font-bold">214,509,000</span></li>
+                  <li>Cattle (incl. calves): <span class="font-bold">36,164,000</span></li>
+                  <li>Pigs: <span class="font-bold">124,061,000</span></li>
+                  <li>Ducks: <span class="font-bold">23,275,000</span></li>
+                  <li>Sheep (incl. lambs): <span class="font-bold">7,499,000</span></li>
+                </ul>
+                <p>Aquatic animal deaths are challenging to calculate since these lives are measured in tons. A very thorough analysis completed by Counting Animals estimated that <span class="font-bold text-primary">3.8 billion finned fish</span> and <span class="font-bold text-primary">43.1 billion shellfish</span> were killed to support the U.S. food supply in 2013. Total U.S. fish landings remained flat at these levels at least through 2018.</p>
+                <p>Taken together, more than <span class="font-bold text-primary">55 billion land and sea animals</span> die annually to support the U.S. food supply. Adding in bycatch (sea creatures caught and discarded--injured or dead) and feed fish, the total number jumps substantially.</p>
+                <p>To put this in perspective, during World War II--the deadliest conflict in human history--more than 60 million people were killed over 6 years. The same number of animals die in support of the American food supply every ten hours.</p>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                How many animals die for food in the United States every second?
+              </div>
+              <div class="collapse-content text-base-content/80 space-y-4">
+                <p class="font-semibold text-primary">Land animals only (USDA 2020 slaughter + imports - exports + pre-slaughter deaths):</p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Every year: <span class="font-bold">8,533,141,000</span></li>
+                  <li>Every day: <span class="font-bold">23,378,000</span></li>
+                  <li>Every hour: <span class="font-bold">974,100</span></li>
+                  <li>Every minute: <span class="font-bold">16,234</span></li>
+                  <li>Every second: <span class="font-bold">271</span></li>
+                </ul>
+                <p class="font-semibold text-primary">Inclusive of land and aquatic animals:</p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Every year: <span class="font-bold">55,429,141,000</span></li>
+                  <li>Every day: <span class="font-bold">151,888,000</span></li>
+                  <li>Every hour: <span class="font-bold">6,328,000</span></li>
+                  <li>Every minute: <span class="font-bold">105,480</span></li>
+                  <li>Every second: <span class="font-bold">1,758</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                How is the animal lives saved counter calculated?
+              </div>
+              <div class="collapse-content text-base-content/80">
+                <p>The counter uses the estimated number of global human deaths per year and multiplies it by a set number of animal lives saved per human death. The calculation is updated in real time and resets every January 1st.</p>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                Why does the counter reset every year?
+              </div>
+              <div class="collapse-content text-base-content/80">
+                <p>The counter is designed to show the impact within the current calendar year, making it easy to see the annual effect of human deaths on animal lives theoretically spared.</p>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                Where did you source your data?
+              </div>
+              <div class="collapse-content text-base-content/80 space-y-4">
+                  <ul class="list-disc list-inside ml-4 space-y-4">
+                    <li>
+                      <span class="font-semibold">U.S. Land Animal Slaughter (2020):</span><br>
+                      <i>
+                        <a href="https://www.nass.usda.gov/Publications/Todays_Reports/reports/lsan0421.pdf" target="_blank" rel="noopener" class="link link-primary">Livestock Slaughter: 2020 Summary (Apr 2021)</a><br>
+                        USDA National Agricultural Statistics Service
+                      </i><br>
+                      <i>
+                        <a href="https://downloads.usda.library.cornell.edu/usda-esmis/files/pg15bd88s/f1882d39g/j6731z19s/pslaan21.pdf" target="_blank" rel="noopener" class="link link-primary">Poultry Slaughter: 2020 Summary (Feb 2021)</a><br>
+                        USDA National Agricultural Statistics Service
+                      </i>
+                    </li>
+                    <li>
+                      <span class="font-semibold">International Trade Data (2020):</span><br>
+                      <i>
+                        <a href="https://www.ers.usda.gov/data-products/livestock-and-meat-international-trade-data/" target="_blank" rel="noopener" class="link link-primary">Livestock and Meat International Trade Data (Meat Data)</a><br>
+                        USDA Economic Research Service
+                      </i>
+                    </li>
+                    <li>
+                      <span class="font-semibold">Farmed Animal Mortality Rates:</span><br>
+                      <i>
+                        <a href="https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare" target="_blank" rel="noopener" class="link link-primary">Animal Welfare Data (multiple years)</a><br>
+                        Animal and Plant Health Inspection Service
+                      </i>
+                    </li>
+                    <li>
+                      <span class="font-semibold">Fish and Crustacean Estimates (2013):</span><br>
+                      <i>
+                        <a href="http://www.countinganimals.com/how-many-animals-does-a-vegetarian-save/" target="_blank" rel="noopener" class="link link-primary">How Many Animals Does a Vegetarian Save (Table 4)</a><br>
+                        Counting Animals
+                      </i><br>
+                      <i>
+                        <a href="http://fishcount.org.uk/publications" target="_blank" rel="noopener" class="link link-primary">Worse Things Happen at Sea (2010)</a> (fish weights)<br>
+                        FishCount
+                      </i>
+                    </li>
+                  </ul>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-lg font-medium">
+                Can I use this content for my own project?
+              </div>
+              <div class="collapse-content text-base-content/80">
+                <p>Yes! This project is open for educational and non-commercial use. Please credit the original sources and this site if you reuse the code or concept.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
     <footer class="footer footer-center p-8 bg-base-200 text-base-content">
       <div>
-        <p class="mb-2">&copy; <span id="footer-year"></span> Human Clock. Inspired by <a href="https://animalclock.org" class="link link-primary" target="_blank" rel="noopener">animalclock.org</a></p>
+        <p class="mb-2">&copy; <span id="footer-year"></span> Inspired by <a href="https://animalclock.org" class="link link-primary" target="_blank" rel="noopener">animalclock.org</a></p>
         <p class="text-sm opacity-70">A real-time visualization of the impact of human mortality on animal welfare</p>
       </div>
     </footer>
