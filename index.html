@@ -43,7 +43,7 @@
     <header class="hero py-12 text-center bg-base-200">
       <div class="hero-content">
         <div>
-          <h1 class="text-5xl md:text-7xl font-black text-primary pulse mb-4" style="transform: rotate(180deg);">ANIMAL CLOCK</h1>
+          <h1 class="text-5xl md:text-7xl font-black text-primary pulse mb-4" style="transform: rotate(180deg);">US ANIMAL CLOCK</h1>
           <p class="text-xl md:text-2xl text-base-content/70">Animal Lives Saved This Year Through Human Death</p>
           <div class="divider divider-primary w-32 mx-auto mt-8"></div>
         </div>
@@ -79,15 +79,18 @@
           <div class="card-body p-8">
             <h2 class="card-title text-2xl font-bold text-primary mb-6 justify-center">How This Works</h2>
             <p class="text-base-content/80 text-base leading-relaxed mb-6">
-              This counter estimates the number of animal lives saved so far this year, based on global human death statistics. 
-              The calculation assumes that each human death results in reduced environmental impact and resource consumption, 
-              thereby "saving" animal lives that would otherwise be lost to habitat destruction, pollution, and other human-caused factors.
+              This counter estimates the number of animal lives saved so far this year, based on US human death statistics. 
+              This calculation assumes that each human death results in reduced environmental impact and resource consumption, 
+              thereby "saving" animal lives that would otherwise be lost to consumption (exclusive of habitat destruction, pollution, and other human-caused factors).
             </p>
             <div class="alert alert-info">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               <div>
-                <span class="font-semibold">Calculation:</span> 56,000,000 human deaths/year × 100 animal lives saved per human death<br>
-                <span class="font-semibold">Source:</span> <a href="https://www.medindia.net/patients/calculators/world-death-clock.asp" class="link link-primary" target="_blank" rel="noopener">MedIndia World Death Clock</a>
+                <span class="font-semibold">Calculation:</span> US human deaths year to date × <span id="animal-per-human-death"></span> animal lives saved per human death<br>
+                <span class="font-semibold">Source:</span> <a href="https://www.cdc.gov/nchs/fastats/deaths.htm" class="link link-primary" target="_blank" rel="noopener">CDC National Center for Health Statistics (2023)</a>
+
+                <!-- The below is commented out because the data is for the world, not the US -->
+                <!-- <span class="font-semibold">Source:</span> <a href="https://ourworldindata.org/births-and-deaths" class="link link-primary" target="_blank" rel="noopener">Our World in Data</a> -->
               </div>
             </div>
           </div>
@@ -253,8 +256,11 @@
     </footer>
     <script>
       // Constants
-      const HUMAN_DEATHS_PER_YEAR = 56000000;
-      const ANIMAL_PER_HUMAN_DEATH = 100;
+      const HUMAN_DEATHS_PER_YEAR = 3100000;
+      const US_TOTAL_POPULATION = 340000000;
+      const LAND_ANIMAL_DEATHS_PER_YEAR = 8533141000;
+      const LAND_AND_AQUATIC_ANIMAL_DEATHS_PER_YEAR = 55429141000;
+      const ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR = (LAND_AND_AQUATIC_ANIMAL_DEATHS_PER_YEAR / US_TOTAL_POPULATION);
 
       // Helper functions
       const getStartOfYear = date => new Date(date.getFullYear(), 0, 1, 0, 0, 0, 0);
@@ -270,13 +276,14 @@
       const getHumanDeathsSoFarThisYear = date => {
         const secondsElapsed = getSecondsElapsedThisYear(date);
         const totalSeconds = getTotalSecondsInYear(date.getFullYear());
-        return (HUMAN_DEATHS_PER_YEAR * secondsElapsed) / totalSeconds;
+
+        return HUMAN_DEATHS_PER_YEAR * (secondsElapsed / totalSeconds);
       };
       const getAnimalLivesSavedSoFarThisYear = date => {
-        return getHumanDeathsSoFarThisYear(date) * ANIMAL_PER_HUMAN_DEATH;
+        return getHumanDeathsSoFarThisYear(date) * ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR;
       };
-      const getCurrentAnimalLivesSavedRate = year => {
-        return (HUMAN_DEATHS_PER_YEAR * ANIMAL_PER_HUMAN_DEATH) / getTotalSecondsInYear(year);
+      const getCurrentAnimalLivesSavedPerSecond = year => {
+        return (HUMAN_DEATHS_PER_YEAR * ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR) / getTotalSecondsInYear(year);
       };
 
       // DOM elements
@@ -284,6 +291,10 @@
       const rateEl = document.getElementById('rate');
       const yearEl = document.getElementById('year');
       const footerYearEl = document.getElementById('footer-year');
+      const animalPerHumanDeathEl = document.getElementById('animal-per-human-death');
+
+      // Set animal per human death
+      animalPerHumanDeathEl.textContent = ANIMALS_SAVED_PER_HUMAN_DEATH_PER_YEAR.toLocaleString(undefined, { maximumFractionDigits: 2 });
 
       // Set year in text
       const now = new Date();
@@ -291,7 +302,7 @@
       footerYearEl.textContent = now.getFullYear();
 
       // Set rate
-      const rate = getCurrentAnimalLivesSavedRate(now.getFullYear());
+      const rate = getCurrentAnimalLivesSavedPerSecond(now.getFullYear());
       rateEl.textContent = rate.toLocaleString(undefined, { maximumFractionDigits: 2 });
 
       // Counter update
